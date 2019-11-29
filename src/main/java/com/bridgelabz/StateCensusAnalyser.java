@@ -7,16 +7,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
 public class StateCensusAnalyser {
-    private static final String SAMPLE_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData1.csv";
+    private static final String SAMPLE_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData.json";
 
     public String matchStateCount(int cnt) throws CustomException {
         int count = 0;
         try {
+            if(!SAMPLE_CSV_FILE_PATH.contains(".csv"))
+            {
+                throw new CustomException(CustomException.ExceptionType.INVALID_FILETYPE);
+            }
             Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
             CsvToBean<CENSUSData> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(CENSUSData.class)
@@ -39,4 +42,6 @@ public class StateCensusAnalyser {
         }
         return null;
     }
+
+
 }

@@ -26,4 +26,14 @@ public class TestCasesIndianStatesCensusAnalyser {
             Assert.assertEquals(CustomException.ExceptionType.NO_SUCH_FILE,e.type);
         }
     }
+
+    @Test
+    public void GivenStateCSV_InCorrectFileType_ShouldThrowCustomException() {
+        StateCensusAnalyser obj = new StateCensusAnalyser();
+        try {
+            obj.matchStateCount(29);
+        } catch (CustomException e) {
+            Assert.assertEquals(CustomException.ExceptionType.INVALID_FILETYPE,e.type);
+        }
+    }
 }

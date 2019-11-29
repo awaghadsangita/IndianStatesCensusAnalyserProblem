@@ -2,7 +2,7 @@ package com.bridgelabz;
 
 public class CustomException extends Exception {
     enum ExceptionType{
-        INCORRECT_COUNT,NO_SUCH_FILE
+        NO_SUCH_FILE,INVALID_FILETYPE
     }
     ExceptionType type;
     public CustomException(ExceptionType type) {
