@@ -23,7 +23,7 @@ public class TestCasesIndianStatesCensusAnalyser {
         try {
             String s = obj.matchStateCount(29);
         }catch (CustomException e) {
-            Assert.assertEquals(CustomException.ExceptionType.INCORRECT_COUNT,e.type);
+            Assert.assertEquals(CustomException.ExceptionType.NO_SUCH_FILE,e.type);
         }
     }
 }
