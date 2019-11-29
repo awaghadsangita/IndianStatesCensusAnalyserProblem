@@ -12,7 +12,7 @@ import java.util.Iterator;
 public class StateCensusAnalyser {
     private static final String SAMPLE_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData.csv";
 
-    public int findStateCount() throws IOException {
+    public String matchStateCount(int cnt) throws IOException {
         int count = 0;
 
         Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
@@ -27,8 +27,15 @@ public class StateCensusAnalyser {
             count++;
             csvDataIterator.next();
         }
+        String result="none";
+        if(count==cnt)
+        {
+            return "HAPPY";
+        }else
+        {
+            return "SAD";
+        }
 
-        return count;
     }
 
 

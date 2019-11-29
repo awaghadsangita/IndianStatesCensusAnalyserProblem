@@ -10,8 +10,8 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void GivenStateCSV_NumberOfRecord_ShouldMatchExpected() {
         StateCensusAnalyser Obj = new StateCensusAnalyser();
         try {
-            int stateCount = Obj.findStateCount();
-            Assert.assertEquals(29, stateCount);
+            String stateCountResult = Obj.matchStateCount(29);
+            Assert.assertEquals("HAPPY",stateCountResult );
         } catch (IOException e) {
             e.printStackTrace();
         }
