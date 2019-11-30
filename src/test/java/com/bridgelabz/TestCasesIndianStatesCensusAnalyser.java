@@ -8,7 +8,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void GivenStateCSV_NumberOfRecord_ShouldMatchExpected() {
         StateCensusAnalyser Obj = new StateCensusAnalyser();
         try {
-            String stateCountResult = Obj.matchStateCount(37);
+            String stateCountResult = Obj.matchStateCount(29);
             Assert.assertEquals("HAPPY", stateCountResult);
         } catch (CustomException e) {
             e.printStackTrace();
@@ -16,7 +16,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     }
 
     @Test
-    public void GivneStateCSV_IncorrectNumberOfRecords_ShouldThrowCustomException() {
+    public void GivneStateCSV_IncorrectFile_ShouldThrowCustomException() {
         StateCensusAnalyser obj = new StateCensusAnalyser();
         try {
             String s = obj.matchStateCount(30);
@@ -29,7 +29,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void GivenStateCSV_InCorrectFileType_ShouldThrowCustomException() {
         StateCensusAnalyser obj = new StateCensusAnalyser();
         try {
-            obj.matchStateCount(37);
+            obj.matchStateCount(29);
         } catch (CustomException e) {
              Assert.assertEquals(CustomException.ExceptionType.INVALID_FILETYPE,e.type);
         }
@@ -39,7 +39,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void GivenStateCSV_InCorrectDelimiter_ShouldThrowCustomException() {
         StateCensusAnalyser obj = new StateCensusAnalyser();
         try {
-            obj.matchStateCount(37);
+            obj.matchStateCount(29);
         } catch (CustomException e) {
             Assert.assertEquals(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION,e.type);
         }
@@ -49,7 +49,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void GivenStateCSV_InCorrectHeader_ShouldThrowCustomException() {
         StateCensusAnalyser obj = new StateCensusAnalyser();
         try {
-            obj.matchStateCount(37);
+            obj.matchStateCount(29);
         } catch (CustomException e) {
             Assert.assertEquals(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION,e.type);
         }
@@ -59,7 +59,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void GivenStateCensusCSV_NumberOfRecord_ShouldMatchExpected() {
         StateSensusHandler obj = new StateSensusHandler();
         try {
-            String result= obj.matchStateCensusCount(29);
+            String result= obj.matchStateCensusCount(37);
             Assert.assertEquals("HAPPY",result);
         } catch (CustomException e) {
             e.printStackTrace();
@@ -69,12 +69,31 @@ public class TestCasesIndianStatesCensusAnalyser {
 
     @Test
     public void GivenStateCensusCSV_IncorrectNumberOfRecords_ShouldThrowCustomException() {
-        StateCensusAnalyser obj = new StateCensusAnalyser();
+        StateSensusHandler obj = new StateSensusHandler();
         try {
-            String s = obj.matchStateCount(37);
+            String s = obj.matchStateCensusCount(37);
         }catch (CustomException e) {
             Assert.assertEquals(CustomException.ExceptionType.NO_SUCH_FILE,e.type);
         }
     }
 
+    @Test
+    public void GivenStateCensusCSV_InCorrectFile_ShouldThrowCustomException() {
+        StateSensusHandler obj = new StateSensusHandler();
+        try {
+            obj.matchStateCensusCount(37);
+        } catch (CustomException e) {
+            Assert.assertEquals(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION,e.type);
+        }
+    }
+
+    @Test
+    public void GivenStateCensusCSV_InCorrectFileType_ShouldThrowCustomException() {
+        StateSensusHandler obj = new StateSensusHandler();
+        try {
+            obj.matchStateCensusCount(37);
+        } catch (CustomException e) {
+            Assert.assertEquals(CustomException.ExceptionType.INVALID_FILETYPE,e.type);
+        }
+    }
 }

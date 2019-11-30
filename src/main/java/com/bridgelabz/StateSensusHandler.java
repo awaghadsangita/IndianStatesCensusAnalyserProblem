@@ -12,12 +12,16 @@ import java.util.Iterator;
 
 public class StateSensusHandler {
     private static final String STATE_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCode.csv";
-    private static final String STATE_CENSUS_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData1.csv";
+    private static final String STATE_CENSUS_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData.json";
 
 
     public String matchStateCensusCount(int cnt) throws CustomException {
         int count = 0;
         try {
+            if(!STATE_CENSUS_CSV_FILE_PATH.contains(".csv"))
+            {
+                throw new CustomException(CustomException.ExceptionType.INVALID_FILETYPE);
+            }
             Reader reader = Files.newBufferedReader(Paths.get(STATE_CENSUS_CSV_FILE_PATH));
             CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(CSVStateCensus.class)
@@ -45,6 +49,8 @@ public class StateSensusHandler {
             throw new CustomException(CustomException.ExceptionType.NO_SUCH_FILE);
         } catch (IOException e) {
             e.printStackTrace();
+        }catch (RuntimeException e){
+            throw new CustomException(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION);
         }
 
 
