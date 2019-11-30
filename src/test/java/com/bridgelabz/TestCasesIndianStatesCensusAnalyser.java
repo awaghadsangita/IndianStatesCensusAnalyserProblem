@@ -3,8 +3,6 @@ package com.bridgelabz;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
-
 public class TestCasesIndianStatesCensusAnalyser {
     @Test
     public void GivenStateCSV_NumberOfRecord_ShouldMatchExpected() {
@@ -23,7 +21,7 @@ public class TestCasesIndianStatesCensusAnalyser {
         try {
             String s = obj.matchStateCount(30);
         }catch (CustomException e) {
-            Assert.assertEquals(CustomException.ExceptionType.INCORRECT_NUMBEROF_RECORDS,e.type);
+            Assert.assertEquals(CustomException.ExceptionType.NO_SUCH_FILE,e.type);
         }
     }
 
@@ -57,8 +55,6 @@ public class TestCasesIndianStatesCensusAnalyser {
         }
     }
     //Following Test cases for stateCensusData
-
-
     @Test
     public void GivenStateCensusCSV_NumberOfRecord_ShouldMatchExpected() {
         StateSensusHandler obj = new StateSensusHandler();
@@ -70,13 +66,15 @@ public class TestCasesIndianStatesCensusAnalyser {
         }
 
     }
+
     @Test
     public void GivenStateCensusCSV_IncorrectNumberOfRecords_ShouldThrowCustomException() {
         StateCensusAnalyser obj = new StateCensusAnalyser();
         try {
-            String s = obj.matchStateCount(30);
+            String s = obj.matchStateCount(37);
         }catch (CustomException e) {
-            Assert.assertEquals(CustomException.ExceptionType.INCORRECT_NUMBEROF_RECORDS,e.type);
+            Assert.assertEquals(CustomException.ExceptionType.NO_SUCH_FILE,e.type);
         }
     }
+
 }

@@ -3,6 +3,7 @@ package com.bridgelabz;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -11,7 +12,7 @@ import java.util.Iterator;
 
 public class StateSensusHandler {
     private static final String STATE_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCode.csv";
-    private static final String STATE_CENSUS_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData.csv";
+    private static final String STATE_CENSUS_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData1.csv";
 
 
     public String matchStateCensusCount(int cnt) throws CustomException {
@@ -40,6 +41,8 @@ public class StateSensusHandler {
             {
                 throw new CustomException(CustomException.ExceptionType.INCORRECT_NUMBEROF_RECORDS);
             }
+        } catch(FileNotFoundException e){
+            throw new CustomException(CustomException.ExceptionType.NO_SUCH_FILE);
         } catch (IOException e) {
             e.printStackTrace();
         }
