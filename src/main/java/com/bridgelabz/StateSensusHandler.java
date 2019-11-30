@@ -14,7 +14,7 @@ public class StateSensusHandler {
     private static final String STATE_CENSUS_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData.csv";
 
 
-    public String matchStateCensusCount(int cnt) {
+    public String matchStateCensusCount(int cnt) throws CustomException {
         int count = 0;
         try {
             Reader reader = Files.newBufferedReader(Paths.get(STATE_CENSUS_CSV_FILE_PATH));
@@ -36,6 +36,9 @@ public class StateSensusHandler {
             }
             if (count == cnt) {
                 return "HAPPY";
+            }else
+            {
+                throw new CustomException(CustomException.ExceptionType.INCORRECT_NUMBEROF_RECORDS);
             }
         } catch (IOException e) {
             e.printStackTrace();

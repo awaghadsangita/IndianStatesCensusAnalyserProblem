@@ -41,7 +41,7 @@ public class StateCensusAnalyser {
                 return "HAPPY";
             }
             else{
-                throw new CustomException(CustomException.ExceptionType.NO_SUCH_FILE);
+                throw new CustomException(CustomException.ExceptionType.INCORRECT_NUMBEROF_RECORDS);
             }
         } catch (FileNotFoundException e) {
             throw new CustomException(CustomException.ExceptionType.NO_SUCH_FILE);
