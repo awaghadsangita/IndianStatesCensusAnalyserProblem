@@ -64,7 +64,6 @@ public class TestCasesIndianStatesCensusAnalyser {
         } catch (CustomException e) {
             e.printStackTrace();
         }
-
     }
 
     @Test
@@ -83,17 +82,17 @@ public class TestCasesIndianStatesCensusAnalyser {
         try {
             obj.matchStateCensusCount(37);
         } catch (CustomException e) {
-            Assert.assertEquals(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION,e.type);
+            Assert.assertEquals(CustomException.ExceptionType.INVALID_FILETYPE,e.type);
         }
     }
 
     @Test
-    public void GivenStateCensusCSV_InCorrectFileType_ShouldThrowCustomException() {
+    public void GivenStateCensusCSV_DelimiterInCorrect_ShouldThrowCustomException() {
         StateSensusHandler obj = new StateSensusHandler();
         try {
             obj.matchStateCensusCount(37);
         } catch (CustomException e) {
-            Assert.assertEquals(CustomException.ExceptionType.INVALID_FILETYPE,e.type);
+            Assert.assertEquals(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION,e.type);
         }
     }
 }
