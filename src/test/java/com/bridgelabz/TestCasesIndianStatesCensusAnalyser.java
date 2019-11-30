@@ -37,5 +37,15 @@ public class TestCasesIndianStatesCensusAnalyser {
         }
     }
 
+    @Test
+    public void GivenStateCSV_InCorrectDelimiter_ShouldThrowCustomException() {
+        StateCensusAnalyser obj = new StateCensusAnalyser();
+        try {
+            obj.matchStateCount(37);
+        } catch (CustomException e) {
+            Assert.assertEquals(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION,e.type);
+        }
+    }
+
 
 }
