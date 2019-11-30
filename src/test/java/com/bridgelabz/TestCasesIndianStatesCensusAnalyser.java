@@ -10,7 +10,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void GivenStateCSV_NumberOfRecord_ShouldMatchExpected() {
         StateCensusAnalyser Obj = new StateCensusAnalyser();
         try {
-            String stateCountResult = Obj.matchStateCount(29);
+            String stateCountResult = Obj.matchStateCount(37);
             Assert.assertEquals("HAPPY", stateCountResult);
         } catch (CustomException e) {
             e.printStackTrace();
@@ -21,7 +21,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void GivneStateCSV_IncorrectNumberOfRecords_ShouldThrowCustomException() {
         StateCensusAnalyser obj = new StateCensusAnalyser();
         try {
-            String s = obj.matchStateCount(29);
+            String s = obj.matchStateCount(30);
         }catch (CustomException e) {
             Assert.assertEquals(CustomException.ExceptionType.NO_SUCH_FILE,e.type);
         }
@@ -31,9 +31,11 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void GivenStateCSV_InCorrectFileType_ShouldThrowCustomException() {
         StateCensusAnalyser obj = new StateCensusAnalyser();
         try {
-            obj.matchStateCount(29);
+            obj.matchStateCount(37);
         } catch (CustomException e) {
-            Assert.assertEquals(CustomException.ExceptionType.INVALID_FILETYPE,e.type);
+             Assert.assertEquals(CustomException.ExceptionType.INVALID_FILETYPE,e.type);
         }
     }
+
+
 }
