@@ -2,14 +2,11 @@ package com.bridgelabz;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class StateCensusAnalyser {
     private static final String STATE_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCode.csv";
@@ -25,15 +22,15 @@ public class StateCensusAnalyser {
                 throw new CustomException(CustomException.ExceptionType.INVALID_FILETYPE);
             }
             Reader reader = Files.newBufferedReader(Paths.get(STATE_CSV_FILE_PATH));
-            CsvToBean<STATEData> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(STATEData.class)
+            CsvToBean<CSVStates> csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(CSVStates.class)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
 
-            Iterator<STATEData> csvDataIterator = csvToBean.iterator();
+            Iterator<CSVStates> csvDataIterator = csvToBean.iterator();
              while (csvDataIterator.hasNext()) {
                 ++count;
-                STATEData csvState =csvDataIterator.next();
+                CSVStates csvState =csvDataIterator.next();
                 System.out.println("SrNo : " + csvState.getSrNo());
                 System.out.println("StateName : " + csvState.getStateName());
                 System.out.println("TIN : " + csvState.getTIN());

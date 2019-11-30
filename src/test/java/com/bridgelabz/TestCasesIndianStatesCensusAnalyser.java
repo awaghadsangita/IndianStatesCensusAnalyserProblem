@@ -56,4 +56,13 @@ public class TestCasesIndianStatesCensusAnalyser {
             Assert.assertEquals(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION,e.type);
         }
     }
+    //Following Test cases for stateCensusData
+
+
+    @Test
+    public void GivenStateCensusCSV_NumberOfRecord_ShouldMatchExpected() {
+        StateSensusHandler obj = new StateSensusHandler();
+        String result = obj.matchStateCensusCount(29);
+        Assert.assertEquals("HAPPY",result);
+    }
 }

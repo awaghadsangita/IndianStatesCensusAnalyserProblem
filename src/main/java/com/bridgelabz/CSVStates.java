@@ -2,7 +2,7 @@ package com.bridgelabz;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class STATEData {
+public class CSVStates {
 
     @CsvBindByName(column = "SrNo")
     private String SrNo;
