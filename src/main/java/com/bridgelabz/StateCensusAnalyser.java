@@ -9,19 +9,18 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 
 public class StateCensusAnalyser {
-    private static final String STATE_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCode.csv";
-    private static final String STATE_CENSUS_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData.csv";
 
 
-    public String matchStateCount(int cnt) throws CustomException {
+
+    public String matchStateCount(int cnt,String filePath) throws CustomException {
         int count = 0;
         try {
 
-            if(!STATE_CSV_FILE_PATH.contains(".csv"))
+            if(!filePath.contains(".csv"))
             {
                 throw new CustomException(CustomException.ExceptionType.INVALID_FILETYPE);
             }
-            Reader reader = Files.newBufferedReader(Paths.get(STATE_CSV_FILE_PATH));
+            Reader reader = Files.newBufferedReader(Paths.get(filePath));
             CsvToBean<CSVStates> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(CSVStates.class)
                     .withIgnoreLeadingWhiteSpace(true)
@@ -55,18 +54,18 @@ public class StateCensusAnalyser {
         return null;
     }
 
-    public String matchStateCensusCount(int cnt) throws CustomException {
+    public String matchStateCensusCount(int cnt,String filePath) throws CustomException {
         int count = 0;
         try{
-            if(!STATE_CENSUS_CSV_FILE_PATH.contains(".csv"))
+            if(!filePath.contains(".csv"))
             {
                 throw new CustomException(CustomException.ExceptionType.INVALID_FILETYPE);
             }
-            Reader reader = Files.newBufferedReader(Paths.get(STATE_CSV_FILE_PATH));
+            Reader reader = Files.newBufferedReader(Paths.get(filePath));
             OpenCSVBuilderClass openCSVBuilderObject=new OpenCSVBuilderClass();
             //CsvToBean<CSVStateCensus> csvToBean=openCSVBuilderObject.OpenCSVBuilder(STATE_CENSUS_CSV_FILE_PATH,"com.bridgelabz.CSVStateCensus");
             CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(CSVStates.class)
+                    .withType(CSVStateCensus.class)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
             Iterator<CSVStateCensus> csvDataIterator = csvToBean.iterator();
@@ -88,9 +87,9 @@ public class StateCensusAnalyser {
         } catch (FileNotFoundException e) {
             throw new CustomException(CustomException.ExceptionType.NO_SUCH_FILE);
         }
-        catch (RuntimeException e){
-            throw new CustomException(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION);
-        }
+//        catch (RuntimeException e){
+//            throw new CustomException(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION);
+//        }
         catch (IOException e) {
 
         }
