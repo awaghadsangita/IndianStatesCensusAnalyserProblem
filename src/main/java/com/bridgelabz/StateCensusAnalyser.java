@@ -55,5 +55,46 @@ public class StateCensusAnalyser {
         return null;
     }
 
+    public String matchStateCensusCount(int cnt) throws CustomException {
+        int count = 0;
+        try{
+            if(!STATE_CENSUS_CSV_FILE_PATH.contains(".csv"))
+            {
+                throw new CustomException(CustomException.ExceptionType.INVALID_FILETYPE);
+            }
+            Reader reader = Files.newBufferedReader(Paths.get(STATE_CSV_FILE_PATH));
+            OpenCSVBuilderClass openCSVBuilderObject=new OpenCSVBuilderClass();
+            //CsvToBean<CSVStateCensus> csvToBean=openCSVBuilderObject.OpenCSVBuilder(STATE_CENSUS_CSV_FILE_PATH,"com.bridgelabz.CSVStateCensus");
+            CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(CSVStates.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+            Iterator<CSVStateCensus> csvDataIterator = csvToBean.iterator();
+            while (csvDataIterator.hasNext()) {
+                ++count;
+                CSVStateCensus csvStateCensus =csvDataIterator.next();
+                System.out.println("State : " + csvStateCensus.getState());
+                System.out.println("Population : " + csvStateCensus.getPopulation());
+                System.out.println("AreaInSqKm : " + csvStateCensus.getAreaInSqKm());
+                System.out.println("DensityPerSqKm : " + csvStateCensus.getDensityPerSqKm());
+                System.out.println("==========================");
+            }
+            if (count == cnt) {
+                return "HAPPY";
+            }
+            else{
+                throw new CustomException(CustomException.ExceptionType.INCORRECT_NUMBEROF_RECORDS);
+            }
+        } catch (FileNotFoundException e) {
+            throw new CustomException(CustomException.ExceptionType.NO_SUCH_FILE);
+        }
+        catch (RuntimeException e){
+            throw new CustomException(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION);
+        }
+        catch (IOException e) {
+
+        }
+        return null;
+    }
 
 }
