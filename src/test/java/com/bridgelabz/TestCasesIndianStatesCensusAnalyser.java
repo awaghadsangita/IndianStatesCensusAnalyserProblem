@@ -1,18 +1,12 @@
 package com.bridgelabz;
 
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 public class TestCasesIndianStatesCensusAnalyser {
-    private static final String STRING_ARRAY_SAMPLE = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCodeCensusData.csv";
-    private static final String STATE_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCode.csv";
     private static final String STATE_CENSUS_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData.csv";
-    private static  final String STATE_CLASSNAME="com.bridgelabz.CSVStates";
     private static  final String STATE_CENSUS_CLASSNAME="com.bridgelabz.CSVStateCensus";
 
     @Test
@@ -63,7 +57,25 @@ public class TestCasesIndianStatesCensusAnalyser {
         }
     }
 
+    @Test
+    public void GivenStateCensusJSON_ShouldReturnMostPopulousState() {
+        StateCensusAnalyser obj = new StateCensusAnalyser();
+        try {
+            List<CSVStateCensus> result= obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,',');
+            Assert.assertEquals("Uttar Pradesh",result.get(0).getState());
+        } catch (CustomException e) {
+            e.printStackTrace();
+        }
+    }
 
-
-
+    @Test
+    public void GivenStateCensusJSON_ShouldReturnLeastPopulousState() {
+        StateCensusAnalyser obj = new StateCensusAnalyser();
+        try {
+            List<CSVStateCensus> result= obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,',');
+            Assert.assertEquals("Sikkim",result.get(result.size()-1).getState());
+        } catch (CustomException e) {
+            e.printStackTrace();
+        }
+    }
 }

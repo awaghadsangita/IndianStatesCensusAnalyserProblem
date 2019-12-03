@@ -33,10 +33,11 @@ public class StateCensusAnalyser {
         }
 
         SortState(csvCensusList);
+        this.SortStateByPopulation(csvCensusList);
         return csvCensusList;
     }
 
-    public void SortState(List<CSVStateCensus> csvCensusList) throws CustomException {
+    public void SortState(List<CSVStateCensus> csvCensusList) {
         for(int i=0;i<csvCensusList.size()-1;i++){
             for(int j=0;j<csvCensusList.size()-i-1;j++){
                 if(csvCensusList.get(j).getState().compareTo(csvCensusList.get(j+1).getState())>0){
@@ -48,6 +49,19 @@ public class StateCensusAnalyser {
         }
         writeToJsonFile(csvCensusList);
    }
+
+    public void SortStateByPopulation(List<CSVStateCensus> csvCensusList) {
+        for(int i=0;i<csvCensusList.size()-1;i++){
+            for(int j=0;j<csvCensusList.size()-i-1;j++){
+                if(csvCensusList.get(j).getPopulation()<(csvCensusList.get(j+1).getPopulation())){
+                    CSVStateCensus tempObj=csvCensusList.get(j);
+                    csvCensusList.set(j,csvCensusList.get(j+1));
+                    csvCensusList.set(j+1,tempObj);
+                }
+            }
+        }
+        writeToJsonFile(csvCensusList);
+    }
 
     public void writeToJsonFile(List<CSVStateCensus> list){
         String filename="/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensus.json";
