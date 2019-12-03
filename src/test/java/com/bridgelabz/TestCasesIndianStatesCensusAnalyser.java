@@ -1,9 +1,14 @@
 package com.bridgelabz;
 
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class TestCasesIndianStatesCensusAnalyser {
+    private static final String STRING_ARRAY_SAMPLE = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCodeCensusData.csv";
     private static final String STATE_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCode.csv";
     private static final String STATE_CENSUS_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData.csv";
     private static  final String STATE_CLASSNAME="com.bridgelabz.CSVStates";
@@ -101,9 +106,29 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void GivenStateCensusCSV_InCorrectHeaders_ShouldThrowCustomException() {
         StateCensusAnalyser obj = new StateCensusAnalyser();
         try {
-            obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,'\t');
+            obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,',');
         } catch (CustomException e) {
             Assert.assertEquals(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION,e.type);
         }
     }
+
+    @Test
+    public void testcase() {
+        StateCensusAnalyser obj=new StateCensusAnalyser();
+        try {
+            String result=obj.matchCensusObjectWithStateCode(28,STATE_CSV_FILE_PATH, STATE_CLASSNAME, STATE_CENSUS_CSV_FILE_PATH, STATE_CENSUS_CLASSNAME,STRING_ARRAY_SAMPLE, ',');
+            Assert.assertEquals("HAPPY",result);
+
+        } catch (CustomException e) {
+            e.printStackTrace();
+        } catch (CsvRequiredFieldEmptyException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CsvDataTypeMismatchException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
