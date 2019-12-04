@@ -55,7 +55,7 @@ public class StateCensusAnalyser <T extends Comparable<T>>{
                 }
             }
         }
-
+        writeToJsonFile(csvCensusList);
     }
 
     public void writeToJsonFile(List<CSVStateCensus> list){
