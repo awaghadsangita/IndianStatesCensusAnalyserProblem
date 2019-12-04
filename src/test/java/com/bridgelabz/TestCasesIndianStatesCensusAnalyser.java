@@ -10,11 +10,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class TestCasesIndianStatesCensusAnalyser {
-    private static final String STRING_ARRAY_SAMPLE = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCodeCensusData.csv";
-    private static final String STATE_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCode.csv";
     private static final String STATE_CENSUS_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData.csv";
-    private static  final String STATE_CLASSNAME="com.bridgelabz.CSVStates";
-    private static  final String STATE_CENSUS_CLASSNAME="com.bridgelabz.CSVStateCensus";
+       private static  final String STATE_CENSUS_CLASSNAME="com.bridgelabz.CSVStateCensus";
 
 
     @Test
@@ -110,8 +107,26 @@ public class TestCasesIndianStatesCensusAnalyser {
             e.printStackTrace();
         }
     }
-
-
+    @Test
+    public void GivenStateCensusJSON_ShouldReturnLargestAreaState() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        StateCensusAnalyser<Integer> obj = new <String>StateCensusAnalyser();
+        try {
+            List<CSVStateCensus> result= obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,',',"getAreaInSqKm");
+            Assert.assertEquals("Rajasthan",result.get(0).getState());
+        } catch (CustomException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void GivenStateCensusJSON_ShouldReturnSmallestAreaState() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InvocationTargetException {
+        StateCensusAnalyser obj = new StateCensusAnalyser();
+        try {
+            List<CSVStateCensus> result = obj.matchStateCensusCount(29, STATE_CENSUS_CSV_FILE_PATH, STATE_CENSUS_CLASSNAME, ',',"getAreaInSqKm");
+            Assert.assertEquals("Arunachal Pradesh", result.get(result.size() - 1).getState());
+        } catch (CustomException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }
