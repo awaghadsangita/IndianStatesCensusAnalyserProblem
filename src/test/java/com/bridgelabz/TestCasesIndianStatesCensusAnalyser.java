@@ -3,8 +3,6 @@ package com.bridgelabz;
 import org.junit.Assert;
 import org.junit.Test;
 
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class TestCasesIndianStatesCensusAnalyser {
