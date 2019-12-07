@@ -9,123 +9,121 @@ import java.util.List;
 
 public class TestCasesIndianStatesCensusAnalyser {
     private static final String STATE_CENSUS_CSV_FILE_PATH = "/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData.csv";
-    private static  final String STATE_CENSUS_CLASSNAME="com.bridgelabz.CSVStateCensus";
 
     @Test
-    public void GivenStateCensusCSV_NumberOfRecord_ShouldMatchExpected() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        StateCensusAnalyser<String> obj = new StateCensusAnalyser();
+    public void givenStateCensusCSV_NumberOfRecord_ShouldMatchExpected() {
+        StateCensusAnalyser<String> censusAnalyser = new StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result= obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,',',"getState");
-            Assert.assertEquals(29,result.size());
-        } catch (CustomException e) {
+            List<CSVStateCensus> result = censusAnalyser.giveStateCensusList(STATE_CENSUS_CSV_FILE_PATH, ',');
+            Assert.assertEquals(29, result.size());
+        } catch (StateCensusCustomException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void GivenStateCensusCSV_InCorrectFile_ShouldThrowCustomException() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        StateCensusAnalyser<String> obj = new StateCensusAnalyser<>();
+    public void givenStateCensusCSV_InCorrectFile_ShouldThrowCustomException() {
+        StateCensusAnalyser<String> censusAnalyser = new StateCensusAnalyser<>();
         try {
-            obj.matchStateCensusCount(29,"/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData1.csv",STATE_CENSUS_CLASSNAME,',',"getState");
-        } catch (CustomException e) {
-            Assert.assertEquals(CustomException.ExceptionType.NO_SUCH_FILE,e.type);
+            censusAnalyser.giveStateCensusList("/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData1.csv", ',');
+        } catch (StateCensusCustomException e) {
+            Assert.assertEquals(StateCensusCustomException.ExceptionType.NO_SUCH_FILE, e.type);
         }
     }
 
     @Test
-    public void GivenStateCensusCSV_InCorrectFileType_ShouldThrowCustomException() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        StateCensusAnalyser<String> obj = new StateCensusAnalyser<>();
+    public void givenStateCensusCSV_InCorrectFileType_ShouldThrowCustomException() {
+        StateCensusAnalyser<String> censusAnalyser = new StateCensusAnalyser<>();
         try {
-            obj.matchStateCensusCount(29,"/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData1.json",STATE_CENSUS_CLASSNAME,',',"getState");
-        } catch (CustomException e) {
-            Assert.assertEquals(CustomException.ExceptionType.INVALID_FILETYPE,e.type);
+            censusAnalyser.giveStateCensusList("/home/admin1/IdeaProjects/IndianStatesCensusAnalyserProblem/src/main/resources/StateCensusData1.json", ',');
+        } catch (StateCensusCustomException e) {
+            Assert.assertEquals(StateCensusCustomException.ExceptionType.INVALID_FILETYPE, e.type);
         }
     }
 
     @Test
-    public void GivenStateCensusCSV_DelimiterInCorrect_ShouldThrowCustomException() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        StateCensusAnalyser<String> obj = new StateCensusAnalyser<>();
+    public void givenStateCensusCSV_DelimiterInCorrect_ShouldThrowCustomException() {
+        StateCensusAnalyser<String> censusAnalyser = new StateCensusAnalyser<>();
         try {
-            obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,'\t',"getState");
-        } catch (CustomException e) {
-            Assert.assertEquals(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION,e.type);
+            censusAnalyser.giveStateCensusList(STATE_CENSUS_CSV_FILE_PATH, ';');
+        } catch (StateCensusCustomException e) {
+            Assert.assertEquals(StateCensusCustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION, e.type);
         }
     }
 
     @Test
-    public void GivenStateCensusCSV_InCorrectHeaders_ShouldThrowCustomException() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        StateCensusAnalyser<String> obj = new StateCensusAnalyser<>();
+    public void givenStateCensusCSV_InCorrectHeaders_ShouldThrowCustomException() {
+        StateCensusAnalyser<String> censusAnalyser = new StateCensusAnalyser<>();
         try {
-            obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,',',"getState");
-        } catch (CustomException e) {
-            Assert.assertEquals(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION,e.type);
+            censusAnalyser.giveStateCensusList(STATE_CENSUS_CSV_FILE_PATH, ',');
+        } catch (StateCensusCustomException e) {
+            Assert.assertEquals(StateCensusCustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION, e.type);
         }
     }
 
     @Test
-    public void GivenStateCensusJSON_ShouldReturnMostPopulousState() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        StateCensusAnalyser<Integer> obj = new <String>StateCensusAnalyser();
+    public void givenStateCensusJSON_ShouldReturnMostPopulousState() {
+        StateCensusAnalyser<Integer> censusAnalyser = new <String>StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result= obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,',',"getPopulation");
-            Assert.assertEquals("Uttar Pradesh",result.get(0).getState());
-        } catch (CustomException e) {
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getPopulation", ',');
+            Assert.assertEquals("Uttar Pradesh", result.get(0).getState());
+        } catch (StateCensusCustomException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void GivenStateCensusJSON_ShouldReturnLeastPopuloustate() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InvocationTargetException {
-        StateCensusAnalyser obj = new StateCensusAnalyser();
+    public void givenStateCensusJSON_ShouldReturnLeastPopuloustate() {
+        StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result = obj.matchStateCensusCount(29, STATE_CENSUS_CSV_FILE_PATH, STATE_CENSUS_CLASSNAME, ',',"getPopulation");
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getPopulation", ',');
             Assert.assertEquals("Sikkim", result.get(result.size() - 1).getState());
-        } catch (CustomException e) {
+        } catch (StateCensusCustomException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void GivenStateCensusJSON_ShouldReturnMostPopulationDensityState() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        StateCensusAnalyser<Integer> obj = new <String>StateCensusAnalyser();
+    public void givenStateCensusJSON_ShouldReturnMostPopulationDensityState() {
+        StateCensusAnalyser<Integer> censusAnalyser = new <String>StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result= obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,',',"getDensityPerSqKm");
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getDensityPerSqKm", ',');
             Assert.assertEquals("Bihar",result.get(0).getState());
-        } catch (CustomException e) {
+        } catch (StateCensusCustomException e) {
             e.printStackTrace();
         }
     }
     @Test
-    public void GivenStateCensusJSON_ShouldReturnLeastPopulationDensityState() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InvocationTargetException {
-        StateCensusAnalyser obj = new StateCensusAnalyser();
+    public void givenStateCensusJSON_ShouldReturnLeastPopulationDensityState() {
+        StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result = obj.matchStateCensusCount(29, STATE_CENSUS_CSV_FILE_PATH, STATE_CENSUS_CLASSNAME, ',',"getDensityPerSqKm");
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getDensityPerSqKm", ',');
             Assert.assertEquals("Arunachal Pradesh", result.get(result.size() - 1).getState());
-        } catch (CustomException e) {
+        } catch (StateCensusCustomException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void GivenStateCensusJSON_ShouldReturnLargestAreaState() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        StateCensusAnalyser<Integer> obj = new <String>StateCensusAnalyser();
+    public void givenStateCensusJSON_ShouldReturnLargestAreaState() {
+        StateCensusAnalyser<Integer> censusAnalyser = new <String>StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result= obj.matchStateCensusCount(29,STATE_CENSUS_CSV_FILE_PATH,STATE_CENSUS_CLASSNAME,',',"getAreaInSqKm");
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getAreaInSqKm", ',');
             Assert.assertEquals("Rajasthan",result.get(0).getState());
-        } catch (CustomException e) {
+        } catch (StateCensusCustomException e) {
             e.printStackTrace();
         }
     }
     @Test
-    public void GivenStateCensusJSON_ShouldReturnSmallestAreaState() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InvocationTargetException {
-        StateCensusAnalyser obj = new StateCensusAnalyser();
+    public void givenStateCensusJSON_ShouldReturnSmallestAreaState() {
+        StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result = obj.matchStateCensusCount(29, STATE_CENSUS_CSV_FILE_PATH, STATE_CENSUS_CLASSNAME, ',',"getAreaInSqKm");
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getAreaInSqKm", ',');
             Assert.assertEquals("Arunachal Pradesh", result.get(result.size() - 1).getState());
-        } catch (CustomException e) {
+        } catch (StateCensusCustomException e) {
             e.printStackTrace();
         }
     }
-
 
 
 }

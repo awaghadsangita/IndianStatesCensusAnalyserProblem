@@ -14,37 +14,46 @@ import java.util.List;
 
 
 public class StateCensusAnalyser <T extends Comparable<T>>{
-    public List<CSVStateCensus> matchStateCensusCount (int cnt, String filePath, String className, char separator,String methodname) throws CustomException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-
+    public List<CSVStateCensus> giveStateCensusList (String filePath, char separator) throws StateCensusCustomException {
         List<CSVStateCensus> csvCensusList = null;
         try {
             if (!filePath.contains(".csv")) {
-                throw new CustomException(CustomException.ExceptionType.INVALID_FILETYPE);
+                throw new StateCensusCustomException(StateCensusCustomException.ExceptionType.INVALID_FILETYPE);
             }
             Reader reader = Files.newBufferedReader(Paths.get(filePath));
+
             CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(Class.forName(className))
+                    .withType(CSVStateCensus.class)
                     .withIgnoreLeadingWhiteSpace(true)
                     .withSeparator(separator)
                     .build();
             csvCensusList = csvToBean.parse();
         }catch (NoSuchFileException e) {
-            throw new CustomException(CustomException.ExceptionType.NO_SUCH_FILE);
-        }catch (RuntimeException | IOException | ClassNotFoundException e) {
-            throw new CustomException(CustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION);
+            throw new StateCensusCustomException(StateCensusCustomException.ExceptionType.NO_SUCH_FILE);
         }
-
-        this.Sort(csvCensusList,methodname);
+        catch (IOException e) {
+            throw new StateCensusCustomException(StateCensusCustomException.ExceptionType.INPUTOUTPUT_ISSUES);
+        }
+        catch (RuntimeException e) {
+            throw new StateCensusCustomException(StateCensusCustomException.ExceptionType.CSV_REQUIRED_FIELD_EMPTY_EXCEPTION);
+        }
 
         return csvCensusList;
     }
+    public List<CSVStateCensus> findSmallestAndLargest(String filePath ,String methodName,char separator) throws StateCensusCustomException {
+        List<CSVStateCensus> censusList=this.giveStateCensusList(filePath,separator);
 
-    public void Sort(List<CSVStateCensus> csvCensusList,String methodname) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        this.sort(censusList,methodName);
+        return censusList;
+    }
+
+    public void sort(List<CSVStateCensus> csvCensusList,String methodname) throws StateCensusCustomException {
+        try {
         for(int i=0;i<csvCensusList.size()-1;i++){
             for(int j=0;j<csvCensusList.size()-i-1;j++){
                 Class cls = csvCensusList.get(j).getClass();
                 Method methodcall = cls.getDeclaredMethod(methodname);
-                T value1=(T)methodcall.invoke(csvCensusList.get(j));
+                T value1= (T)methodcall.invoke(csvCensusList.get(j));
                 Class cls1 = csvCensusList.get(j+1).getClass();
                 Method methodcall1 = cls1.getDeclaredMethod(methodname);
                 T value2=(T)methodcall1.invoke(csvCensusList.get(j+1));
@@ -56,6 +65,13 @@ public class StateCensusAnalyser <T extends Comparable<T>>{
             }
         }
         writeToJsonFile(csvCensusList);
+        } catch (NoSuchMethodException e) {
+            throw new StateCensusCustomException(StateCensusCustomException.ExceptionType.NO_SUCH_METHOD);
+        }catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     public void writeToJsonFile(List<CSVStateCensus> list){
