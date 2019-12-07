@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.bridgelabz.TestCasesIndianStatesCensusAnalyser" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-12-07T12:56:18" hostname="admin1-Lenovo-Product" time="0.153">
+  <properties/>
+  <testcase name="givenStateCensusJSON_ShouldReturnSmallestAreaState" classname="com.bridgelabz.TestCasesIndianStatesCensusAnalyser" time="0.153"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

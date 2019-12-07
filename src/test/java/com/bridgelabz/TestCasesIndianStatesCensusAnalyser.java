@@ -63,7 +63,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void givenStateCensusJSON_ShouldReturnMostPopulousState() {
         StateCensusAnalyser<Integer> censusAnalyser = new <String>StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getPopulation", ',');
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "population", ',');
             Assert.assertEquals("Uttar Pradesh", result.get(0).getState());
         } catch (StateCensusCustomException e) {
             e.printStackTrace();
@@ -74,7 +74,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void givenStateCensusJSON_ShouldReturnLeastPopuloustate() {
         StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getPopulation", ',');
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "population", ',');
             Assert.assertEquals("Sikkim", result.get(result.size() - 1).getState());
         } catch (StateCensusCustomException e) {
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void givenStateCensusJSON_ShouldReturnMostPopulationDensityState() {
         StateCensusAnalyser<Integer> censusAnalyser = new <String>StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getDensityPerSqKm", ',');
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "density", ',');
             Assert.assertEquals("Bihar",result.get(0).getState());
         } catch (StateCensusCustomException e) {
             e.printStackTrace();
@@ -95,7 +95,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void givenStateCensusJSON_ShouldReturnLeastPopulationDensityState() {
         StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getDensityPerSqKm", ',');
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "density", ',');
             Assert.assertEquals("Arunachal Pradesh", result.get(result.size() - 1).getState());
         } catch (StateCensusCustomException e) {
             e.printStackTrace();
@@ -106,7 +106,7 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void givenStateCensusJSON_ShouldReturnLargestAreaState() {
         StateCensusAnalyser<Integer> censusAnalyser = new <String>StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getAreaInSqKm", ',');
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "area", ',');
             Assert.assertEquals("Rajasthan",result.get(0).getState());
         } catch (StateCensusCustomException e) {
             e.printStackTrace();
@@ -116,12 +116,10 @@ public class TestCasesIndianStatesCensusAnalyser {
     public void givenStateCensusJSON_ShouldReturnSmallestAreaState() {
         StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
         try {
-            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "getAreaInSqKm", ',');
+            List<CSVStateCensus> result = censusAnalyser.findSmallestAndLargest(STATE_CENSUS_CSV_FILE_PATH, "area", ',');
             Assert.assertEquals("Arunachal Pradesh", result.get(result.size() - 1).getState());
         } catch (StateCensusCustomException e) {
             e.printStackTrace();
         }
     }
-
-
 }

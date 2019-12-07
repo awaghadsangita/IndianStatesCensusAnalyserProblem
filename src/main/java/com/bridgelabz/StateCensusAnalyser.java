@@ -39,11 +39,31 @@ public class StateCensusAnalyser<T extends Comparable<T>> {
         return csvCensusList;
     }
 
-    public List<CSVStateCensus> findSmallestAndLargest(String filePath, String methodName, char separator) throws StateCensusCustomException {
+    public List<CSVStateCensus> findSmallestAndLargest(String filePath, String field, char separator) throws StateCensusCustomException {
         List<CSVStateCensus> censusList = this.giveStateCensusList(filePath, separator);
+        String methodName = this.giveGetterMethodName(field);
         this.sort(censusList, methodName);
 
         return censusList;
+    }
+
+    public String giveGetterMethodName(String field) {
+        String methodName = null;
+        switch (field.toLowerCase()) {
+            case "state":
+                methodName = "getState";
+                break;
+            case "population":
+                methodName = "getPopulation";
+                break;
+            case "area":
+                methodName = "getAreaInSqKm";
+                break;
+            case "density":
+                methodName = "getDensityPerSqKm";
+                break;
+        }
+        return methodName;
     }
 
     public void sort(List<CSVStateCensus> csvCensusList, String methodName) throws StateCensusCustomException {
